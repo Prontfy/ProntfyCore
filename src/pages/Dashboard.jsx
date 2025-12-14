@@ -35,19 +35,23 @@ export default function Dashboard() {
       current += 1;
       setProgress(current);
       if (current >= TARGET_PROGRESS) clearInterval(timer);
-    }, 30);
+    }, 28);
     return () => clearInterval(timer);
   }, []);
 
   return (
     <div className="dash-root">
+      {/* HEADER */}
       <header className="dash-header">
-        <h2>Olá{user?.name ? `, ${user.name}` : ""}</h2>
+        <h2>
+          Olá{user?.name ? `, ${user.name}` : ""}
+        </h2>
         <p className="muted">
-          Você já começou. Este é o seu espaço de evolução dentro da Prontfy.
+          Você já começou. Esse é o seu espaço de evolução no Prontfy Core.
         </p>
       </header>
 
+      {/* CARDS */}
       <section className="dash-cards">
         {/* PROGRESSO */}
         <div className="dash-card progress-card">
@@ -72,6 +76,7 @@ export default function Dashboard() {
                 }
               />
             </svg>
+
             <div className="progress-text">
               <strong>{progress}%</strong>
               <span>do projeto</span>
@@ -79,8 +84,8 @@ export default function Dashboard() {
           </div>
 
           <p className="progress-desc">
-            Esse progresso inicial existe porque você já deu o passo mais
-            difícil: entrar.
+            Esse progresso inicial existe porque você já deu o passo mais difícil:
+            entrar.
           </p>
         </div>
 
@@ -97,15 +102,20 @@ export default function Dashboard() {
         <div className="dash-card">
           <div className="card-top">Usuários ativos</div>
           <div className="card-mid">18</div>
-          <div className="card-btm muted">Últimos 30 dias</div>
+          <div className="card-btm muted">
+            Últimos 30 dias
+          </div>
         </div>
       </section>
 
+      {/* GRÁFICO */}
       <section className="dash-chart-wrap">
         <div className="dash-chart-card">
           <div className="chart-head">
             <h3>Evolução de ações</h3>
-            <span className="small-muted">Interações por mês</span>
+            <span className="small-muted">
+              Interações por mês
+            </span>
           </div>
 
           <div className="chart-body">
