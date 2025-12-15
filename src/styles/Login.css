@@ -1,26 +1,32 @@
+/* Reset e box sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* Fundo principal */
 .login-bg {
-  width: 100%;
-  min-height: 100vh;
+  width: 100vw;
+  min-height: 100svh; /* viewport real no mobile */
   background: linear-gradient(135deg, #5b50ff, #3f2bff);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  overflow: hidden;
+  padding: 16px;
+  overflow-x: hidden;
 }
 
 /* Card */
 .login-card {
   width: 100%;
   max-width: 430px;
-  background: white;
+  background: #ffffff;
   padding: 40px 32px;
   border-radius: 28px;
-  box-shadow: 0 25px 70px rgba(0,0,0,0.18);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.18);
   text-align: center;
   animation: fadeIn 0.6s ease;
-  overflow: hidden;
 }
 
 /* Logo */
@@ -30,10 +36,7 @@
   height: auto;
   margin: 0 auto 10px auto;
   display: block;
-
-  /* garante que nunca estoure o card */
   object-fit: contain;
-  image-rendering: smooth;
 }
 
 /* Título */
@@ -42,6 +45,7 @@
   font-weight: 800;
   margin-top: 8px;
   margin-bottom: 10px;
+  color: #111;
 }
 
 /* Subtexto */
@@ -55,8 +59,8 @@
 /* Botões de login */
 .btn-login {
   width: 100%;
-  background: #fff;
-  border: 2px solid #eee;
+  background: #ffffff;
+  border: 2px solid #eeeeee;
   border-radius: 14px;
   padding: 14px;
   font-size: 17px;
@@ -67,13 +71,13 @@
   gap: 12px;
   cursor: pointer;
   margin-bottom: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-login:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.10);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* Ícones dos botões */
@@ -97,11 +101,11 @@
   width: 100%;
   padding: 13px;
   margin-bottom: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   border-radius: 12px;
   font-size: 15px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s ease;
 }
 
 .input:focus {
@@ -114,14 +118,14 @@
   padding: 14px;
   border-radius: 14px;
   background: #6b5cff;
-  color: #fff;
+  color: #ffffff;
   font-size: 18px;
   font-weight: 700;
   border: none;
   cursor: pointer;
   margin-top: 4px;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
-  transition: transform 0.2s, filter 0.2s;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .btn-submit:hover {
@@ -146,24 +150,58 @@
   text-decoration: underline;
 }
 
-/* Fade */
+/* Animação */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Mobile */
-@media (max-width: 480px) {
+/* RESPONSIVO – MOBILE E TABLET */
+@media (max-width: 768px) {
+  .login-bg {
+    padding: 16px;
+    align-items: center;
+  }
+
   .login-card {
-    padding: 32px 25px;
-    max-width: 90%;
+    width: 100%;
+    max-width: 420px;
+    padding: 28px 22px;
+    border-radius: 20px;
+  }
+
+  .login-brand {
+    width: 90px;
+    margin-bottom: 6px;
   }
 
   .login-title {
-    font-size: 22px;
+    font-size: 21px;
   }
 
-  .btn-login, .btn-submit {
+  .login-sub {
+    font-size: 14px;
+    margin-bottom: 22px;
+  }
+
+  .btn-login {
+    font-size: 15px;
+    padding: 13px;
+  }
+
+  .btn-submit {
     font-size: 16px;
+    padding: 14px;
+  }
+
+  .terms {
+    font-size: 12px;
+    line-height: 1.4;
   }
 }
