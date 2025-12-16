@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import ProntfyCoreLayouts from "../layouts/ProntfyCoreLayouts";
+
 import Login from "./Login";
 import Dashboard from "./Dashboard";
 import PrivacyPolicy from "./PrivacyPolicy";
@@ -10,12 +11,16 @@ import PrivacyPolicy from "./PrivacyPolicy";
 import { useAuthStore } from "../store/auth";
 
 /**
- * Router central:
- * - /login => Login (public)
- * - / => Home pública (com layout)
- * - /politica-de-privacidade => Página pública (SEM layout)
- * - /exclusao-de-dados => Página pública (SEM layout)
- * - /painel => Dashboard protegido
+ * Router oficial do Prontfy Core
+ *
+ * 🔓 PÁGINAS PÚBLICAS (SEM layout do app)
+ * - /politica-de-privacidade
+ * - /exclusao-de-dados
+ *
+ * 🧩 APP (COM layout)
+ * - /
+ * - /login
+ * - /painel (protegido)
  */
 
 function ProtectedRoute({ children }) {
@@ -28,64 +33,86 @@ function ProtectedRoute({ children }) {
   return user ? children : <Navigate to="/login" replace />;
 }
 
-function DataDeletion() {
-  return (
-    <main
-      style={{
-        padding: 32,
-        maxWidth: 800,
-        margin: "40px auto",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <h1>Exclusão de dados</h1>
-
-      <p>
-        O usuário pode solicitar a exclusão dos seus dados pessoais a qualquer
-        momento entrando em contato pelo e-mail:
-      </p>
-
-      <p>
-        <strong>contato@prontfy.com.br</strong>
-      </p>
-
-      <p>
-        A solicitação será processada conforme a legislação vigente.
-      </p>
-    </main>
-  );
-}
-
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Login público */}
-        <Route path="/login" element={<Login />} />
+        {/* ============================
+            PÁGINAS INSTITUCIONAIS
+            (Meta / Facebook exige)
+           ============================ */}
 
-        {/* Páginas públicas exigidas pela Meta (SEM layout) */}
-        <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
-        <Route path="/exclusao-de-dados" element={<DataDeletion />} />
-
-        {/* Home pública COM layout */}
-        <Route path="/" element={<ProntfyCoreLayouts />}>
-          <Route
-            index
-            element={<div style={{ padding: 24 }}>Bem-vindo ao Prontfy Core</div>}
-          />
-        </Route>
-
-        {/* Painel privado */}
         <Route
-          path="/painel"
+          path="/politica-de-privacidade"
+          element={<PrivacyPolicy />}
+        />
+
+        <Route
+          path="/exclusao-de-dados"
           element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
+            <main
+              style={{
+                padding: "40px 20px",
+                maxWidth: 900,
+                margin: "0 auto",
+                fontFamily: "system-ui, sans-serif",
+                lineHeight: 1.6,
+              }}
+            >
+              <h1>Exclusão de dados</h1>
+
+              <p>
+                O Prontfy Core respeita a privacidade dos usuários e garante o
+                direito à exclusão de dados pessoais.
+              </p>
+
+              <p>
+                Caso deseje solicitar a exclusão dos seus dados, envie um e-mail
+                para:
+              </p>
+
+              <p>
+                <strong>contato@prontfy.com.br</strong>
+              </p>
+
+              <p>
+                A solicitação será analisada e processada conforme a legislação
+                vigente (LGPD).
+              </p>
+            </main>
           }
         />
 
-        {/* Fallback */}
+        {/* ============================
+            APP COM LAYOUT
+           ============================ */}
+
+        <Route element={<ProntfyCoreLayouts />}>
+          <Route
+            path="/"
+            element={
+              <div style={{ padding: 24 }}>
+                Bem-vindo ao Prontfy Core
+              </div>
+            }
+          />
+
+          <Route path="/login" element={<Login />} />
+
+          <Route
+            path="/painel"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+
+        {/* ============================
+            FALLBACK
+           ============================ */}
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
