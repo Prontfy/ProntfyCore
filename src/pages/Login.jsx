@@ -1,7 +1,5 @@
-import React from "react";
-
-import "./Login.css";
 import { supabase } from "../services/supabase";
+import "../styles/Login.css";
 
 import logo from "../assets/logo-symbol.png";
 import googleIcon from "../assets/google-icon.png";
@@ -37,9 +35,19 @@ export default function Login() {
   }
 
   return (
-    <div className="login-bg">
-      <div className="login-card">
-        <img src={logo} alt="Prontfy Core" className="login-brand" />
+    <main className="login-bg">
+      <section className="login-card">
+        {/* LOGO – tamanho explicitamente controlado */}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <img
+            src={logo}
+            alt="Prontfy Core"
+            className="login-brand"
+            width={110}
+            height="auto"
+            draggable={false}
+          />
+        </div>
 
         <h1 className="login-title">Bem-vindo ao Prontfy Core</h1>
 
@@ -47,14 +55,30 @@ export default function Login() {
           Acesse com sua conta para continuar — recomendamos usar a conta principal.
         </p>
 
-        <button className="btn-login" onClick={handleGoogleLogin}>
-          <img src={googleIcon} alt="Google" className="btn-icon" />
-          Entrar com Google
+        {/* GOOGLE */}
+        <button type="button" className="btn-login" onClick={handleGoogleLogin}>
+          <img
+            src={googleIcon}
+            alt=""
+            className="btn-icon"
+            width={24}
+            height={24}
+            draggable={false}
+          />
+          <span>Entrar com Google</span>
         </button>
 
-        <button className="btn-login" onClick={handleFacebookLogin}>
-          <img src={facebookIcon} alt="Facebook" className="btn-icon" />
-          Entrar com Facebook
+        {/* FACEBOOK */}
+        <button type="button" className="btn-login" onClick={handleFacebookLogin}>
+          <img
+            src={facebookIcon}
+            alt=""
+            className="btn-icon"
+            width={24}
+            height={24}
+            draggable={false}
+          />
+          <span>Entrar com Facebook</span>
         </button>
 
         <div className="divider">ou</div>
@@ -62,7 +86,9 @@ export default function Login() {
         <input className="input" type="email" placeholder="Email" />
         <input className="input" type="password" placeholder="Senha" />
 
-        <button className="btn-submit">Entrar</button>
+        <button type="button" className="btn-submit">
+          Entrar
+        </button>
 
         <p className="terms">
           Ao continuar, você concorda com nossos{" "}
@@ -78,9 +104,7 @@ export default function Login() {
             Política de Privacidade
           </a>.
         </p>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
-
-
