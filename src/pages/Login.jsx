@@ -1,90 +1,71 @@
-// src/pages/Login.jsx
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import "./Login.css";
 import { supabase } from "../services/supabase";
-import "../styles/Login.css";
+
+import logo from "../assets/logo-prontfy.png";
+import googleIcon from "../assets/google-icon.png";
+import facebookIcon from "../assets/facebook-icon.png";
 
 export default function Login() {
-  const navigate = useNavigate();
+  async function handleGoogleLogin() {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/painel`,
+      },
+    });
 
-  useEffect(() => {
-    async function checkSession() {
-      try {
-        const { data } = await supabase.auth.getSession();
-        if (data?.session?.user) navigate("/", { replace: true });
-      } catch {}
+    if (error) {
+      alert("Erro ao entrar com Google");
+      console.error(error);
     }
-    checkSession();
-  }, [navigate]);
+  }
 
-  const handleGoogle = async () => {
-    try {
-      await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/login`,
-          queryParams: { prompt: "select_account" },
-        },
-      });
-    } catch (err) {
-      alert("Erro ao entrar: " + (err.message || err));
-    }
-  };
+  async function handleFacebookLogin() {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "facebook",
+      options: {
+        redirectTo: `${window.location.origin}/painel`,
+      },
+    });
 
-  const handleFacebook = async () => {
-    try {
-      await supabase.auth.signInWithOAuth({
-        provider: "facebook",
-        options: {
-          redirectTo: `${window.location.origin}/login`,
-        },
-      });
-    } catch (err) {
-      alert("Erro ao entrar: " + (err.message || err));
+    if (error) {
+      alert("Erro ao entrar com Facebook");
+      console.error(error);
     }
-  };
+  }
 
   return (
     <div className="login-bg">
       <div className="login-card">
+        <img src={logo} alt="Prontfy Core" className="login-brand" />
 
-        {/* Logo principal */}
-        <img
-          src="/images/logo-symbol.png"
-          alt="Prontfy"
-          className="login-brand"
-        />
-
-        {/* Título */}
         <h1 className="login-title">Bem-vindo ao Prontfy Core</h1>
 
-        {/* Texto */}
         <p className="login-sub">
-          Acesse com sua conta para continuar — recomendamos usar a conta principal / Gmail.
+          Acesse com sua conta para continuar — recomendamos usar a conta
+          principal / Gmail.
         </p>
 
-        {/* Botão Google */}
-        <button className="btn-login" onClick={handleGoogle}>
-          <img src="/images/google-icon.png" alt="Google" className="btn-icon" />
+        <button className="btn-login" onClick={handleGoogleLogin}>
+          <img src={googleIcon} alt="Google" className="btn-icon" />
           Entrar com Google
         </button>
 
-        {/* Botão Facebook */}
-        <button className="btn-login" onClick={handleFacebook}>
-          <img src="/images/facebook-icon.png" alt="Facebook" className="btn-icon" />
+        <button className="btn-login" onClick={handleFacebookLogin}>
+          <img src={facebookIcon} alt="Facebook" className="btn-icon" />
           Entrar com Facebook
         </button>
 
         <div className="divider">ou</div>
 
-        {/* Login tradicional */}
-        <input type="email" placeholder="Email" className="input" />
-        <input type="password" placeholder="Senha" className="input" />
+        <input className="input" type="email" placeholder="Email" />
+        <input className="input" type="password" placeholder="Senha" />
 
         <button className="btn-submit">Entrar</button>
 
         <p className="terms">
-          Ao continuar, concorda com nossos <a href="#">Termos</a> e <a href="#">Políticas</a>.
+          Ao continuar, concorda com nossos{" "}
+          <a href="#">Termos</a> e <a href="#">Políticas</a>.
         </p>
       </div>
     </div>
