@@ -12,51 +12,68 @@ import { useAuthStore } from "../store/auth";
 /**
  * Router central:
  * - /login => Login (public)
- * - / => Home pública
- * - /politica-de-privacidade => Página pública exigida pela Meta
- * - /exclusao-de-dados => Página pública exigida pela Meta
+ * - / => Home pública (com layout)
+ * - /politica-de-privacidade => Página pública (SEM layout)
+ * - /exclusao-de-dados => Página pública (SEM layout)
  * - /painel => Dashboard protegido
  */
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuthStore();
-  if (loading) return <div style={{ padding: 24 }}>Carregando...</div>;
+
+  if (loading) {
+    return <div style={{ padding: 24 }}>Carregando...</div>;
+  }
+
   return user ? children : <Navigate to="/login" replace />;
+}
+
+function DataDeletion() {
+  return (
+    <main
+      style={{
+        padding: 32,
+        maxWidth: 800,
+        margin: "40px auto",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      <h1>Exclusão de dados</h1>
+
+      <p>
+        O usuário pode solicitar a exclusão dos seus dados pessoais a qualquer
+        momento entrando em contato pelo e-mail:
+      </p>
+
+      <p>
+        <strong>contato@prontfy.com.br</strong>
+      </p>
+
+      <p>
+        A solicitação será processada conforme a legislação vigente.
+      </p>
+    </main>
+  );
 }
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Login público */}
         <Route path="/login" element={<Login />} />
 
-        {/* Home pública */}
-        <Route path="/" element={<ProntfyCoreLayouts />}>
-          <Route index element={<div style={{ padding: 24 }}>Bem-vindo ao Prontfy Core</div>} />
-        </Route>
-
-        {/* Política de Privacidade (pública) */}
+        {/* Páginas públicas exigidas pela Meta (SEM layout) */}
         <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+        <Route path="/exclusao-de-dados" element={<DataDeletion />} />
 
-        {/* Exclusão de dados (vamos criar já já) */}
-        <Route
-          path="/exclusao-de-dados"
-          element={
-            <main style={{ padding: 32, maxWidth: 800, margin: "0 auto" }}>
-              <h1>Exclusão de dados</h1>
-              <p>
-                O usuário pode solicitar a exclusão de seus dados pessoais a qualquer momento
-                entrando em contato pelo e-mail:
-              </p>
-              <p>
-                <strong>contato@prontfy.com.br</strong>
-              </p>
-              <p>
-                A solicitação será processada conforme a legislação vigente.
-              </p>
-            </main>
-          }
-        />
+        {/* Home pública COM layout */}
+        <Route path="/" element={<ProntfyCoreLayouts />}>
+          <Route
+            index
+            element={<div style={{ padding: 24 }}>Bem-vindo ao Prontfy Core</div>}
+          />
+        </Route>
 
         {/* Painel privado */}
         <Route
@@ -68,6 +85,7 @@ export default function AppRouter() {
           }
         />
 
+        {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
