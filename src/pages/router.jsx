@@ -11,30 +11,38 @@ import PrivacyPolicy from "./PrivacyPolicy";
 
 import { useAuthStore } from "../store/auth";
 
+/* ===============================
+   ROTA PROTEGIDA
+================================ */
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuthStore();
-  if (loading) return <div style={{ padding: 24 }}>Carregando...</div>;
+
+  if (loading) {
+    return <div style={{ padding: 24 }}>Carregando...</div>;
+  }
+
   return user ? children : <Navigate to="/login" replace />;
 }
 
+/* ===============================
+   ROUTER PRINCIPAL
+================================ */
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* ===============================
-            ROTAS PÚBLICAS LEGAIS (META)
-           =============================== */}
-        <Route element={<PublicLayout />}>
-          <Route
-            path="/politica-de-privacidade"
-            element={<PrivacyPolicy />}
-          />
+        {/* =====================================================
+            ROTAS PÚBLICAS LEGAIS (META / FACEBOOK)
+            NÃO dependem de login
+        ====================================================== */}
+        <Route path="/" element={<PublicLayout />}>
+          <Route path="politica-de-privacidade" element={<PrivacyPolicy />} />
 
           <Route
-            path="/termos-de-servico"
+            path="termos-de-servico"
             element={
-              <main>
+              <main style={{ padding: 32, maxWidth: 900, margin: "0 auto" }}>
                 <h1>Termos de Serviço</h1>
                 <p>
                   Ao utilizar a plataforma Prontfy, você concorda com estes termos.
@@ -50,12 +58,13 @@ export default function AppRouter() {
           />
 
           <Route
-            path="/exclusao-de-dados"
+            path="exclusao-de-dados"
             element={
-              <main>
+              <main style={{ padding: 32, maxWidth: 900, margin: "0 auto" }}>
                 <h1>Exclusão de dados</h1>
                 <p>
-                  O usuário pode solicitar a exclusão de seus dados pessoais.
+                  O usuário pode solicitar a exclusão de seus dados pessoais a
+                  qualquer momento.
                 </p>
                 <p>
                   Envie um e-mail para:
@@ -68,36 +77,37 @@ export default function AppRouter() {
           />
         </Route>
 
-        {/* ===============================
+        {/* =====================================================
             LOGIN
-           =============================== */}
+        ====================================================== */}
         <Route path="/login" element={<Login />} />
 
-        {/* ===============================
-            APP (HOME)
-           =============================== */}
+        {/* =====================================================
+            APLICAÇÃO PRINCIPAL
+        ====================================================== */}
         <Route path="/" element={<ProntfyCoreLayouts />}>
           <Route
             index
-            element={<div style={{ padding: 24 }}>Bem-vindo ao Prontfy Core</div>}
+            element={
+              <div style={{ padding: 24 }}>
+                Bem-vindo ao Prontfy Core
+              </div>
+            }
+          />
+
+          <Route
+            path="painel"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
           />
         </Route>
 
-        {/* ===============================
-            PAINEL PROTEGIDO
-           =============================== */}
-        <Route
-          path="/painel"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* ===============================
-            FALLBACK
-           =============================== */}
+        {/* =====================================================
+            FALLBACK GLOBAL (ÚLTIMO SEMPRE)
+        ====================================================== */}
         <Route path="*" element={<Navigate to="/" replace />} />
 
       </Routes>
