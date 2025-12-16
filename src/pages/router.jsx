@@ -5,16 +5,17 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProntfyCoreLayouts from "../layouts/ProntfyCoreLayouts";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
+import PrivacyPolicy from "./PrivacyPolicy";
 
 import { useAuthStore } from "../store/auth";
 
 /**
  * Router central:
  * - /login => Login (public)
- * - /painel => Dashboard protegido (criador/usuário depois)
- * - / (root) => ProntfyCoreLayouts (público, com conteúdo)
- *
- * Observação: usamos /painel como rota principal pós-login.
+ * - / => Home pública
+ * - /politica-de-privacidade => Página pública exigida pela Meta
+ * - /exclusao-de-dados => Página pública exigida pela Meta
+ * - /painel => Dashboard protegido
  */
 
 function ProtectedRoute({ children }) {
@@ -29,10 +30,33 @@ export default function AppRouter() {
       <Routes>
         <Route path="/login" element={<Login />} />
 
-        {/* Home pública usando o layout */}
+        {/* Home pública */}
         <Route path="/" element={<ProntfyCoreLayouts />}>
           <Route index element={<div style={{ padding: 24 }}>Bem-vindo ao Prontfy Core</div>} />
         </Route>
+
+        {/* Política de Privacidade (pública) */}
+        <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+
+        {/* Exclusão de dados (vamos criar já já) */}
+        <Route
+          path="/exclusao-de-dados"
+          element={
+            <main style={{ padding: 32, maxWidth: 800, margin: "0 auto" }}>
+              <h1>Exclusão de dados</h1>
+              <p>
+                O usuário pode solicitar a exclusão de seus dados pessoais a qualquer momento
+                entrando em contato pelo e-mail:
+              </p>
+              <p>
+                <strong>contato@prontfy.com.br</strong>
+              </p>
+              <p>
+                A solicitação será processada conforme a legislação vigente.
+              </p>
+            </main>
+          }
+        />
 
         {/* Painel privado */}
         <Route
