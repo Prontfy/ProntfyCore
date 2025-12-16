@@ -1,7 +1,7 @@
 import "./Login.css";
 import { supabase } from "../services/supabase";
 
-import logo from "../assets/logo-prontfy.png";
+import logo from "../assets/logo-symbol.png";
 import googleIcon from "../assets/google-icon.png";
 import facebookIcon from "../assets/facebook-icon.png";
 
@@ -42,8 +42,7 @@ export default function Login() {
         <h1 className="login-title">Bem-vindo ao Prontfy Core</h1>
 
         <p className="login-sub">
-          Acesse com sua conta para continuar — recomendamos usar a conta
-          principal.
+          Acesse com sua conta para continuar — recomendamos usar a conta principal.
         </p>
 
         <button className="btn-login" onClick={handleGoogleLogin}>
@@ -81,4 +80,6 @@ export default function Login() {
     </div>
   );
 }
+
+
 
