@@ -10,13 +10,13 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/painel`,
+        redirectTo: "https://prontfy.com.br/painel",
       },
     });
 
     if (error) {
+      console.error("Erro ao entrar com Google:", error.message);
       alert("Erro ao entrar com Google");
-      console.error(error);
     }
   }
 
@@ -24,13 +24,13 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "facebook",
       options: {
-        redirectTo: `${window.location.origin}/painel`,
+        redirectTo: "https://prontfy.com.br/painel",
       },
     });
 
     if (error) {
+      console.error("Erro ao entrar com Facebook:", error.message);
       alert("Erro ao entrar com Facebook");
-      console.error(error);
     }
   }
 
@@ -43,7 +43,7 @@ export default function Login() {
 
         <p className="login-sub">
           Acesse com sua conta para continuar — recomendamos usar a conta
-          principal / Gmail.
+          principal.
         </p>
 
         <button className="btn-login" onClick={handleGoogleLogin}>
@@ -64,10 +64,21 @@ export default function Login() {
         <button className="btn-submit">Entrar</button>
 
         <p className="terms">
-          Ao continuar, concorda com nossos{" "}
-          <a href="#">Termos</a> e <a href="#">Políticas</a>.
+          Ao continuar, você concorda com nossos{" "}
+          <a href="https://prontfy.com.br/termos-de-uso" target="_blank" rel="noreferrer">
+            Termos
+          </a>{" "}
+          e{" "}
+          <a
+            href="https://prontfy.com.br/politica-de-privacidade"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Política de Privacidade
+          </a>.
         </p>
       </div>
     </div>
   );
 }
+
