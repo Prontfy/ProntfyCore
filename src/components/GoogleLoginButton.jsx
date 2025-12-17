@@ -10,13 +10,13 @@ export default function GoogleLoginButton() {
     });
 
     if (error) {
-      console.error(error);
       alert("Erro ao iniciar login com Google");
+      console.error(error);
     }
   };
 
   return (
-    <button onClick={handleLogin}>
+    <button className="btn-login" onClick={handleLogin}>
       Entrar com Google
     </button>
   );
