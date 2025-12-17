@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { supabase } from "../services/supabase";
 import "../styles/Login.css";
 
@@ -6,101 +7,115 @@ import googleIcon from "../assets/google-icon.png";
 import facebookIcon from "../assets/facebook-icon.png";
 
 export default function Login() {
-  async function handleGoogleLogin() {
+  const [returningUser, setReturningUser] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    const lastUser = localStorage.getItem("lastUser");
+    if (lastUser) {
+      setReturningUser(JSON.parse(lastUser));
+    }
+  }, []);
+
+  async function handleOAuth(provider) {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
+      provider,
       options: {
         redirectTo: "https://prontfy.com.br/painel",
       },
     });
 
     if (error) {
-      console.error("Erro ao entrar com Google:", error.message);
-      alert("Erro ao entrar com Google");
+      alert(`Erro ao entrar com ${provider}`);
+      console.error(error);
     }
   }
 
-  async function handleFacebookLogin() {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "facebook",
-      options: {
-        redirectTo: "https://prontfy.com.br/painel",
-      },
-    });
-
-    if (error) {
-      console.error("Erro ao entrar com Facebook:", error.message);
-      alert("Erro ao entrar com Facebook");
-    }
+  function handleRemoveAccounts() {
+    localStorage.removeItem("lastUser");
+    setReturningUser(null);
   }
 
   return (
     <main className="login-bg">
       <section className="login-card">
-        {/* LOGO – tamanho explicitamente controlado */}
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <img
-            src={logo}
-            alt="Prontfy Core"
-            className="login-brand"
-            width={110}
-            height="auto"
-            draggable={false}
-          />
+          <img src={logo} alt="Prontfy Core" className="login-brand" width={110} />
         </div>
 
-        <h1 className="login-title">Bem-vindo ao Prontfy Core</h1>
+        {returningUser ? (
+          <>
+            <h1 className="login-title">Bem-vindo de volta</h1>
 
-        <p className="login-sub">
-          Acesse com sua conta para continuar — recomendamos usar a conta principal.
-        </p>
+            <div className="return-user">
+              <div className="avatar">
+                {returningUser.avatar ? (
+                  <img src={returningUser.avatar} alt="" />
+                ) : (
+                  <span>{returningUser.name?.charAt(0) || "U"}</span>
+                )}
+              </div>
+              <strong>{returningUser.name}</strong>
+              <small>{returningUser.email}</small>
+            </div>
 
-        {/* GOOGLE */}
-        <button type="button" className="btn-login" onClick={handleGoogleLogin}>
-          <img
-            src={googleIcon}
-            alt=""
-            className="btn-icon"
-            width={24}
-            height={24}
-            draggable={false}
-          />
-          <span>Entrar com Google</span>
-        </button>
+            <button className="btn-submit" onClick={() => handleOAuth("google")}>
+              Continuar
+            </button>
 
-        {/* FACEBOOK */}
-        <button type="button" className="btn-login" onClick={handleFacebookLogin}>
-          <img
-            src={facebookIcon}
-            alt=""
-            className="btn-icon"
-            width={24}
-            height={24}
-            draggable={false}
-          />
-          <span>Entrar com Facebook</span>
-        </button>
+            <button className="btn-link" onClick={() => setReturningUser(null)}>
+              Continuar com outra conta
+            </button>
 
-        <div className="divider">ou</div>
+            <button className="btn-link danger" onClick={handleRemoveAccounts}>
+              Remover contas
+            </button>
+          </>
+        ) : (
+          <>
+            <h1 className="login-title">Bem-vindo ao Prontfy Core</h1>
 
-        <input className="input" type="email" placeholder="Email" />
-        <input className="input" type="password" placeholder="Senha" />
+            <p className="login-sub">
+              Acesse com sua conta para continuar — recomendamos usar a conta principal.
+            </p>
 
-        <button type="button" className="btn-submit">
-          Entrar
-        </button>
+            <button className="btn-login" onClick={() => handleOAuth("google")}>
+              <img src={googleIcon} alt="" className="btn-icon" />
+              Entrar com Google
+            </button>
+
+            <button className="btn-login" onClick={() => handleOAuth("facebook")}>
+              <img src={facebookIcon} alt="" className="btn-icon" />
+              Entrar com Facebook
+            </button>
+
+            <div className="divider">ou</div>
+
+            <input className="input" type="email" placeholder="Email" />
+
+            <div className="password-field">
+              <input
+                className="input"
+                type={showPassword ? "text" : "password"}
+                placeholder="Senha"
+              />
+              <button
+                type="button"
+                className="toggle-pass"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
+
+            <button className="btn-submit">Entrar</button>
+          </>
+        )}
 
         <p className="terms">
           Ao continuar, você concorda com nossos{" "}
-          <a href="https://prontfy.com.br/termos-de-uso" target="_blank" rel="noreferrer">
-            Termos
-          </a>{" "}
-          e{" "}
-          <a
-            href="https://prontfy.com.br/politica-de-privacidade"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="/termos-de-uso" target="_blank">Termos</a> e{" "}
+          <a href="/politica-de-privacidade" target="_blank">
             Política de Privacidade
           </a>.
         </p>

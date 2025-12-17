@@ -1,42 +1,50 @@
-import React from 'react'
-import { supabase } from '../services/supabase'
+import { supabase } from "../services/supabase";
 
-export default function GoogleLoginButton() {
+export default function GoogleLoginButton({
+  label = "Entrar com Google",
+  redirectTo = "https://prontfy.com.br/painel",
+}) {
   const handleGoogleLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: "google",
       options: {
-        redirectTo: window.location.origin
-      }
-    })
+        redirectTo,
+      },
+    });
 
     if (error) {
-      console.error(error)
-      alert('Erro ao iniciar login com Google: ' + error.message)
+      console.error("Erro ao entrar com Google:", error.message);
+      alert("Erro ao entrar com Google");
     }
-  }
+  };
 
   return (
-    <button 
+    <button
+      type="button"
       onClick={handleGoogleLogin}
+      className="btn-login"
       style={{
-        background: '#fff',
-        padding: '10px 16px',
-        borderRadius: '8px',
-        border: '1px solid #ddd',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        cursor: 'pointer',
-        fontSize: '16px'
+        background: "#fff",
+        border: "1px solid #e5e7eb",
+        borderRadius: "12px",
+        padding: "12px 16px",
+        display: "flex",
+        alignItems: "center",
+        gap: "12px",
+        cursor: "pointer",
+        fontSize: "16px",
+        fontWeight: 500,
+        width: "100%",
       }}
     >
-      <img 
-        src="https://www.google.com/favicon.ico" 
-        alt="Google" 
-        style={{ width: 18, height: 18 }}
+      <img
+        src="https://www.google.com/favicon.ico"
+        alt="Google"
+        width={20}
+        height={20}
+        draggable={false}
       />
-      Entrar com Google
+      <span>{label}</span>
     </button>
-  )
+  );
 }
