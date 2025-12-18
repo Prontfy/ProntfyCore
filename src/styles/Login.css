@@ -1,20 +1,20 @@
-/* Reset e box sizing */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Fundo principal */
+/* Fundo */
 .login-bg {
   width: 100vw;
-  min-height: 100svh; /* viewport real no mobile */
+  min-height: 100svh;
   background: linear-gradient(135deg, #5b50ff, #3f2bff);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 16px;
-  overflow: hidden; /* 🔒 trava definitiva para shapes */
+  overflow: hidden;
 }
 
 /* Card */
@@ -27,47 +27,37 @@
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.18);
   text-align: center;
   animation: fadeIn 0.6s ease;
-  position: relative;
-  z-index: 2; /* garante que fique acima dos shapes */
 }
 
-/* 🔒 TRAVA GLOBAL DE IMAGENS */
+/* Imagens */
 .login-bg img,
 .login-bg svg {
   max-width: 100%;
   height: auto;
   display: block;
-  object-fit: contain;
 }
 
 /* Logo */
 .login-brand {
   width: 110px;
-  max-width: 110px;
-  height: auto;
-  margin: 0 auto 10px auto;
-  display: block;
-  object-fit: contain;
+  margin: 0 auto 12px auto;
 }
 
-/* Título */
+/* Texto */
 .login-title {
   font-size: 26px;
   font-weight: 800;
-  margin-top: 8px;
   margin-bottom: 10px;
   color: #111;
 }
 
-/* Subtexto */
 .login-sub {
   color: #555;
   margin-bottom: 28px;
   font-size: 15px;
-  line-height: 1.4;
 }
 
-/* Botões de login */
+/* Botões OAuth */
 .btn-login {
   width: 100%;
   background: #ffffff;
@@ -91,15 +81,12 @@
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Ícones dos botões */
 .btn-icon {
   width: 24px;
   height: 24px;
-  object-fit: contain;
-  flex-shrink: 0;
 }
 
-/* Divisor */
+/* Divider */
 .divider {
   margin: 10px 0;
   color: #777;
@@ -111,19 +98,59 @@
 .input {
   width: 100%;
   padding: 13px;
-  margin-bottom: 12px;
   border: 1px solid #dddddd;
   border-radius: 12px;
   font-size: 15px;
-  outline: none;
-  transition: border-color 0.2s ease;
+  margin-bottom: 12px;
 }
 
 .input:focus {
   border-color: #6b5cff;
+  outline: none;
 }
 
-/* Botão Enviar */
+/* Campo senha */
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-field .input {
+  padding-right: 46px;
+}
+
+/* Olho */
+.password-eye {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.password-eye svg {
+  width: 20px;
+  height: 20px;
+  fill: #777;
+}
+
+.password-eye:hover svg {
+  fill: #000;
+}
+
+/* Esqueci senha */
+.forgot-password {
+  display: block;
+  margin: 8px 0 14px 0;
+  font-size: 14px;
+  color: #6b5cff;
+  text-decoration: underline;
+  text-align: left;
+}
+
+/* Entrar */
 .btn-submit {
   width: 100%;
   padding: 14px;
@@ -134,14 +161,11 @@
   font-weight: 700;
   border: none;
   cursor: pointer;
-  margin-top: 4px;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .btn-submit:hover {
   transform: translateY(-3px);
-  filter: brightness(1.05);
 }
 
 /* Termos */
@@ -173,46 +197,14 @@
   }
 }
 
-/* RESPONSIVO – MOBILE E TABLET */
+/* Mobile */
 @media (max-width: 768px) {
-  .login-bg {
-    padding: 16px;
-    align-items: center;
-  }
-
   .login-card {
-    width: 100%;
-    max-width: 420px;
     padding: 28px 22px;
     border-radius: 20px;
   }
 
-  .login-brand {
-    width: 90px;
-    margin-bottom: 6px;
-  }
-
   .login-title {
-    font-size: 21px;
-  }
-
-  .login-sub {
-    font-size: 14px;
-    margin-bottom: 22px;
-  }
-
-  .btn-login {
-    font-size: 15px;
-    padding: 13px;
-  }
-
-  .btn-submit {
-    font-size: 16px;
-    padding: 14px;
-  }
-
-  .terms {
-    font-size: 12px;
-    line-height: 1.4;
+    font-size: 22px;
   }
 }
