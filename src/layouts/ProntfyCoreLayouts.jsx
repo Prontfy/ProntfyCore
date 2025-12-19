@@ -1,183 +1,133 @@
-// src/layouts/ProntfyCoreLayouts.jsx
 import React, { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
 import {
   FiHome,
   FiUsers,
   FiSettings,
   FiBell,
   FiLogOut,
-  FiMenu,
+  FiLogIn,
 } from "react-icons/fi";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/auth";
 import "./ProntfyCoreLayouts.css";
 
-/* ===============================
-   SVG DO P ORGÂNICO (INLINE)
-================================ */
-const ProntfyPSymbol = ({ size = 26 }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 120 120"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M40 15C40 15 75 15 75 45C75 70 40 70 40 70V15Z"
-      stroke="currentColor"
-      strokeWidth="10"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M40 70C40 70 40 95 65 105"
-      stroke="currentColor"
-      strokeWidth="10"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 export default function ProntfyCoreLayouts() {
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
+  const { user, logout, loginWithGoogle } = useAuthStore();
 
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [hoverP, setHoverP] = useState(false);
+  const [appsOpen, setAppsOpen] = useState(false);
 
   return (
-    <div className="prontfy-layout-root">
-      {/* ===============================
-          SIDEBAR
-      =============================== */}
+    <div className="prontfy-layout">
+
+      {/* SIDEBAR */}
       <aside className="sidebar">
         <div className="sidebar-logo">
-          <img
-            src="/images/logo-symbol-white.png"
-            alt="Prontfy Core"
-            className="logo-img"
-          />
+          <img src="/images/logo-symbol-white.png" alt="Prontfy" />
           <span>Prontfy Core</span>
         </div>
 
         <nav className="sidebar-menu">
           <button onClick={() => navigate("/painel")}>
-            <FiHome /> Painel
+            <FiHome /> <span>Painel</span>
           </button>
           <button>
-            <FiUsers /> Usuários
+            <FiUsers /> <span>Usuários</span>
           </button>
           <button>
-            <FiSettings /> Configurações
+            <FiSettings /> <span>Configurações</span>
           </button>
         </nav>
 
         <div className="sidebar-footer">
           <button
-            className="logout-btn"
             onClick={() => {
               logout();
               navigate("/login");
             }}
           >
-            <FiLogOut /> Sair
+            <FiLogOut /> <span>Sair</span>
           </button>
         </div>
       </aside>
 
-      {/* ===============================
-          MAIN
-      =============================== */}
-      <main className="main">
-        {/* ===============================
-            TOPBAR
-        =============================== */}
+      {/* MAIN */}
+      <div className="main-area">
+
+        {/* TOPBAR */}
         <header className="topbar">
-          <div className="topbar-left">
-            <FiMenu className="mobile-menu" />
-            <input
-              type="text"
-              placeholder="Pesquisar..."
-              className="search-input"
-            />
+          <div className="topbar-search">
+            <input type="text" placeholder="Pesquisar..." />
           </div>
 
-          <div className="topbar-right">
-            {/* NOTIFICAÇÃO */}
+          <div className="topbar-actions">
+
+            {/* SININHO */}
             <button className="icon-btn">
               <FiBell />
               <span className="badge">9+</span>
             </button>
 
-            {/* AVATAR / LOGIN */}
+            {/* AVATAR OU AUTH */}
             {user ? (
               <img
-                src={
-                  user.user_metadata?.avatar_url ||
-                  "/images/avatar-placeholder.png"
-                }
-                alt="Avatar"
                 className="avatar"
+                src={user.user_metadata?.avatar_url || "/images/avatar-placeholder.png"}
+                alt="Avatar"
               />
             ) : (
-              <button
-                className="login-btn"
-                onClick={() => navigate("/login")}
-              >
-                Entrar
-              </button>
+              <div className="auth-actions">
+                <button onClick={loginWithGoogle}>
+                  <FiLogIn /> Entrar
+                </button>
+                <button className="outline" onClick={loginWithGoogle}>
+                  Criar conta
+                </button>
+              </div>
             )}
 
-            {/* GRID → P ORGÂNICO */}
-            <button
-              className="grid-p-btn"
-              onMouseEnter={() => setHoverP(true)}
-              onMouseLeave={() => setHoverP(false)}
-              onClick={() => setMenuOpen((o) => !o)}
+            {/* GRID / P */}
+            <div
+              className="apps-wrapper"
+              onMouseLeave={() => setAppsOpen(false)}
             >
-              {!hoverP ? (
-                <div className="grid-dots">
-                  {Array.from({ length: 9 }).map((_, i) => (
-                    <span key={i} />
-                  ))}
-                </div>
-              ) : (
-                <ProntfyPSymbol />
-              )}
-            </button>
-          </div>
-
-          {/* DROPDOWN */}
-          {menuOpen && (
-            <div className="dropdown-menu">
-              <button onClick={() => navigate("/painel")}>Painel</button>
-              <button>Criadores</button>
-              <button>Ferramentas</button>
-              <button>Configurações</button>
-              <button>Ajuda</button>
-              <button>Atualizações</button>
               <button
-                onClick={() => {
-                  logout();
-                  navigate("/login");
-                }}
+                className="apps-btn"
+                onClick={() => setAppsOpen(!appsOpen)}
               >
-                Sair
+                <span className="grid-icon">⋮⋮</span>
+                <span className="p-icon">P</span>
               </button>
+
+              {appsOpen && (
+                <div className="apps-menu">
+                  <button onClick={() => navigate("/painel")}>Painel</button>
+                  <button>Criadores</button>
+                  <button>Ferramentas</button>
+                  <button>Configurações</button>
+                  <button>Ajuda</button>
+                  <button>Atualizações</button>
+                  <button
+                    onClick={() => {
+                      logout();
+                      navigate("/login");
+                    }}
+                  >
+                    Sair
+                  </button>
+                </div>
+              )}
             </div>
-          )}
+
+          </div>
         </header>
 
-        {/* ===============================
-            CONTEÚDO
-        =============================== */}
-        <section className="content">
+        {/* CONTEÚDO */}
+        <main className="content">
           <Outlet />
-        </section>
-      </main>
+        </main>
+
+      </div>
     </div>
   );
 }
-
