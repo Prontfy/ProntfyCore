@@ -20,6 +20,7 @@ export default function ProntfyCoreLayouts() {
 
   const [collapsed, setCollapsed] = useState(false);
   const [appsOpen, setAppsOpen] = useState(false);
+  const [appsHover, setAppsHover] = useState(false);
 
   return (
     <div className={`pc-root ${collapsed ? "collapsed" : ""}`}>
@@ -28,7 +29,7 @@ export default function ProntfyCoreLayouts() {
         <div className="pc-sidebar-header">
           <button
             className="pc-hamburger"
-            onClick={() => setCollapsed((v) => !v)}
+            onClick={() => setCollapsed(v => !v)}
             aria-label="Recolher menu"
           >
             <FiMenu />
@@ -83,8 +84,17 @@ export default function ProntfyCoreLayouts() {
           <div className="pc-top-actions">
             <FiBell className="pc-icon" />
 
-            {/* AVATAR ou LOGIN */}
-            {user ? (
+            {!user && (
+              <button
+                className="pc-login-btn"
+                onClick={() => navigate("/login")}
+              >
+                <FiLogIn />
+                Entrar
+              </button>
+            )}
+
+            {user && (
               <img
                 src={
                   user.user_metadata?.avatar_url ||
@@ -93,34 +103,30 @@ export default function ProntfyCoreLayouts() {
                 alt="Avatar"
                 className="pc-avatar"
               />
-            ) : (
-              <button
-                className="pc-login-btn"
-                onClick={() => navigate("/login")}
-              >
-                <FiLogIn /> Entrar
-              </button>
             )}
 
-            {/* APPS BUTTON */}
+            {/* BOTÃO GRID / P */}
             <button
               className="pc-apps-btn"
-              onClick={() => setAppsOpen((v) => !v)}
               aria-label="Abrir apps"
+              onClick={() => setAppsOpen(v => !v)}
+              onMouseEnter={() => setAppsHover(true)}
+              onMouseLeave={() => setAppsHover(false)}
             >
-              {/* GRID */}
-              <div className="apps-grid">
-                {Array.from({ length: 9 }).map((_, i) => (
-                  <span key={i} className="dot" />
-                ))}
-              </div>
-
-              {/* P ORGÂNICO NO HOVER */}
-              <img
-                src="/images/p-organico.png"
-                alt="Prontfy"
-                className="apps-p"
-              />
+              {!appsHover ? (
+                <div className="pc-dots-grid">
+                  {Array.from({ length: 9 }).map((_, i) => (
+                    <span key={i} />
+                  ))}
+                </div>
+              ) : (
+                <img
+                  src="/images/prontfy-p-outline.png"
+                  alt="Prontfy P"
+                  className="pc-p-icon"
+                  draggable={false}
+                />
+              )}
             </button>
 
             {appsOpen && (
@@ -131,7 +137,7 @@ export default function ProntfyCoreLayouts() {
                 <button>Configurações</button>
                 <button>Ajuda</button>
                 <button>Atualizações</button>
-                <button onClick={logout}>Sair</button>
+                <button>Sair</button>
               </div>
             )}
           </div>
