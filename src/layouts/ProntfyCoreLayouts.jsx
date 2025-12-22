@@ -19,7 +19,6 @@ export default function ProntfyCoreLayouts() {
 
   const [collapsed, setCollapsed] = useState(false);
   const [appsOpen, setAppsOpen] = useState(false);
-  const [appsHover, setAppsHover] = useState(false);
 
   return (
     <div className={`pc-root ${collapsed ? "collapsed" : ""}`}>
@@ -28,9 +27,8 @@ export default function ProntfyCoreLayouts() {
         <div className="pc-sidebar-header">
           <button
             className="pc-hamburger"
-            onClick={() => setCollapsed((v) => !v)}
+            onClick={() => setCollapsed(v => !v)}
             aria-label="Recolher menu"
-            type="button"
           >
             <FiMenu />
           </button>
@@ -82,10 +80,10 @@ export default function ProntfyCoreLayouts() {
           </div>
 
           <div className="pc-top-actions">
-            <button className="pc-icon-btn" type="button">
-              <FiBell />
-            </button>
+            {/* SININHO */}
+            <FiBell className="pc-icon pc-bell" />
 
+            {/* AVATAR / LOGIN */}
             {user ? (
               <img
                 src={
@@ -99,34 +97,30 @@ export default function ProntfyCoreLayouts() {
               <button
                 className="pc-login-btn"
                 onClick={() => navigate("/login")}
-                type="button"
               >
                 Entrar
               </button>
             )}
 
+            {/* APPS */}
             <button
-              type="button"
               className="pc-apps-btn"
-              onClick={() => setAppsOpen((v) => !v)}
-              onMouseEnter={() => setAppsHover(true)}
-              onMouseLeave={() => setAppsHover(false)}
+              onClick={() => setAppsOpen(v => !v)}
               aria-label="Abrir apps"
             >
-              {!appsHover ? (
+              <div className="pc-apps-icon">
                 <div className="pc-dots-grid">
                   {Array.from({ length: 9 }).map((_, i) => (
                     <span key={i} />
                   ))}
                 </div>
-              ) : (
+
                 <img
-                  src="/images/p-symbol-outline.png"
+                  src="/images/p-organico.png"
                   alt="Prontfy"
                   className="pc-p-symbol"
-                  draggable={false}
                 />
-              )}
+              </div>
             </button>
 
             {appsOpen && (
