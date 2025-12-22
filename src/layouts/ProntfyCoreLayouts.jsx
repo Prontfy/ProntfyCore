@@ -8,7 +8,6 @@ import {
   FiMenu,
   FiLogOut,
   FiBell,
-  FiLogIn,
 } from "react-icons/fi";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/auth";
@@ -29,8 +28,9 @@ export default function ProntfyCoreLayouts() {
         <div className="pc-sidebar-header">
           <button
             className="pc-hamburger"
-            onClick={() => setCollapsed(v => !v)}
+            onClick={() => setCollapsed((v) => !v)}
             aria-label="Recolher menu"
+            type="button"
           >
             <FiMenu />
           </button>
@@ -82,36 +82,36 @@ export default function ProntfyCoreLayouts() {
           </div>
 
           <div className="pc-top-actions">
-            <FiBell className="pc-icon" />
+            <button className="pc-icon-btn" type="button">
+              <FiBell />
+            </button>
 
-            {!user && (
-              <button
-                className="pc-login-btn"
-                onClick={() => navigate("/login")}
-              >
-                <FiLogIn />
-                Entrar
-              </button>
-            )}
-
-            {user && (
+            {user ? (
               <img
                 src={
-                  user.user_metadata?.avatar_url ||
+                  user?.user_metadata?.avatar_url ||
                   "/images/avatar-placeholder.png"
                 }
                 alt="Avatar"
                 className="pc-avatar"
               />
+            ) : (
+              <button
+                className="pc-login-btn"
+                onClick={() => navigate("/login")}
+                type="button"
+              >
+                Entrar
+              </button>
             )}
 
-            {/* BOTÃO GRID / P */}
             <button
+              type="button"
               className="pc-apps-btn"
-              aria-label="Abrir apps"
-              onClick={() => setAppsOpen(v => !v)}
+              onClick={() => setAppsOpen((v) => !v)}
               onMouseEnter={() => setAppsHover(true)}
               onMouseLeave={() => setAppsHover(false)}
+              aria-label="Abrir apps"
             >
               {!appsHover ? (
                 <div className="pc-dots-grid">
@@ -121,9 +121,9 @@ export default function ProntfyCoreLayouts() {
                 </div>
               ) : (
                 <img
-                  src="/images/prontfy-p-outline.png"
-                  alt="Prontfy P"
-                  className="pc-p-icon"
+                  src="/images/p-symbol-outline.png"
+                  alt="Prontfy"
+                  className="pc-p-symbol"
                   draggable={false}
                 />
               )}
@@ -137,7 +137,14 @@ export default function ProntfyCoreLayouts() {
                 <button>Configurações</button>
                 <button>Ajuda</button>
                 <button>Atualizações</button>
-                <button>Sair</button>
+                <button
+                  onClick={() => {
+                    logout();
+                    navigate("/login");
+                  }}
+                >
+                  Sair
+                </button>
               </div>
             )}
           </div>
