@@ -141,7 +141,7 @@ body {
   position: relative;
 }
 
-/* ICON BUTTON */
+/* ICON BUTTON (bell etc) */
 .pc-icon-btn {
   width: 36px;
   height: 36px;
@@ -152,6 +152,11 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+/* BELL */
+.pc-bell {
+  font-size: 24px;
 }
 
 /* AVATAR */
@@ -171,7 +176,10 @@ body {
   cursor: pointer;
 }
 
-/* APPS BUTTON */
+/* =========================
+   APPS BUTTON (BOLINHAS / P)
+   ========================= */
+
 .pc-apps-btn {
   width: 36px;
   height: 36px;
@@ -179,18 +187,29 @@ body {
   border: none;
   background: transparent;
   cursor: pointer;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* SLOT FIXO DO ÍCONE */
+.pc-apps-icon {
+  width: 24px;
+  height: 24px;
   position: relative;
 }
 
-/* DOTS GRID */
+/* GRID DE BOLINHAS */
 .pc-dots-grid {
+  position: absolute;
+  inset: 0;
   display: grid;
-  grid-template-columns: repeat(3, 4px);
-  grid-template-rows: repeat(3, 4px);
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 4px;
+  place-items: center;
+  transition: opacity 0.2s ease;
 }
 
 .pc-dots-grid span {
@@ -200,11 +219,25 @@ body {
   border-radius: 50%;
 }
 
-/* P SYMBOL */
+/* P VAZADO */
 .pc-p-symbol {
-  width: 20px;
-  height: 20px;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* HOVER: TROCA PERFEITA */
+.pc-apps-btn:hover .pc-dots-grid {
+  opacity: 0;
+}
+
+.pc-apps-btn:hover .pc-p-symbol {
+  opacity: 1;
 }
 
 /* APPS MENU */
@@ -245,7 +278,4 @@ body {
 /* CONTENT */
 .pc-content {
   padding: 24px 32px;
-}
-.pc-bell {
-  font-size: 24px;
 }
