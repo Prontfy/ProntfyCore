@@ -54,7 +54,6 @@ body {
 .pc-logo-img {
   width: 32px;
   height: 32px;
-  object-fit: contain;
 }
 
 /* MENU */
@@ -70,7 +69,6 @@ body {
   border: none;
   color: #dfe3f0;
   padding: 10px 12px;
-  text-align: left;
   border-radius: 8px;
   cursor: pointer;
   display: flex;
@@ -87,8 +85,7 @@ body {
   padding: 12px;
 }
 
-.pc-sidebar-footer .logout {
-  width: 100%;
+.logout {
   background: none;
   border: none;
   color: #ffb4b4;
@@ -130,7 +127,6 @@ body {
   border: none;
   outline: none;
   background: transparent;
-  width: 100%;
 }
 
 /* TOP ACTIONS */
@@ -141,20 +137,15 @@ body {
   position: relative;
 }
 
-/* ICON BUTTON (bell etc) */
+/* ICON */
 .pc-icon-btn {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
-  border: none;
   background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: none;
   cursor: pointer;
 }
 
-/* BELL */
 .pc-bell {
   font-size: 24px;
 }
@@ -164,10 +155,9 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  object-fit: cover;
 }
 
-/* LOGIN BUTTON */
+/* LOGIN */
 .pc-login-btn {
   padding: 6px 12px;
   border-radius: 8px;
@@ -176,10 +166,7 @@ body {
   cursor: pointer;
 }
 
-/* =========================
-   APPS BUTTON (BOLINHAS / P)
-   ========================= */
-
+/* APPS BUTTON */
 .pc-apps-btn {
   width: 36px;
   height: 36px;
@@ -188,25 +175,20 @@ body {
   background: transparent;
   cursor: pointer;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* SLOT FIXO DO ÍCONE */
 .pc-apps-icon {
   width: 24px;
   height: 24px;
   position: relative;
 }
 
-/* GRID DE BOLINHAS */
+/* DOTS */
 .pc-dots-grid {
   position: absolute;
   inset: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
   gap: 4px;
   place-items: center;
   transition: opacity 0.2s ease;
@@ -219,25 +201,27 @@ body {
   border-radius: 50%;
 }
 
-/* P VAZADO */
+/* SVG P */
 .pc-p-symbol {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
 }
 
-/* HOVER: TROCA PERFEITA */
+.pc-p-symbol path {
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+/* HOVER EFFECT */
 .pc-apps-btn:hover .pc-dots-grid {
   opacity: 0;
 }
 
-.pc-apps-btn:hover .pc-p-symbol {
-  opacity: 1;
+.pc-apps-btn:hover .pc-p-symbol path {
+  stroke-dashoffset: 0;
 }
 
 /* APPS MENU */
@@ -250,9 +234,6 @@ body {
   border-radius: 12px;
   padding: 8px;
   width: 200px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
   z-index: 10;
 }
 
@@ -260,10 +241,9 @@ body {
   background: none;
   border: none;
   color: #fff;
-  text-align: left;
   padding: 8px;
+  text-align: left;
   border-radius: 6px;
-  cursor: pointer;
 }
 
 .pc-apps-menu button:hover {
@@ -275,7 +255,6 @@ body {
   padding: 48px 32px;
 }
 
-/* CONTENT */
 .pc-content {
   padding: 24px 32px;
 }
