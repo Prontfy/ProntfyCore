@@ -1,4 +1,3 @@
-// src/layouts/ProntfyCoreLayouts.jsx
 import React, { useState } from "react";
 import {
   FiHome,
@@ -81,7 +80,7 @@ export default function ProntfyCoreLayouts() {
 
           <div className="pc-top-actions">
             {/* SININHO */}
-            <FiBell className="pc-icon pc-bell" />
+            <FiBell className="pc-bell" />
 
             {/* AVATAR / LOGIN */}
             {user ? (
@@ -115,8 +114,9 @@ export default function ProntfyCoreLayouts() {
                   ))}
                 </div>
 
+                {/* SVG P ORGÂNICO */}
                 <img
-                  src="/images/p-organico.png"
+                  src="/images/p-organico.svg"
                   alt="Prontfy"
                   className="pc-p-symbol"
                 />
