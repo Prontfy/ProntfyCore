@@ -19,11 +19,6 @@ export default function ProntfyCoreLayouts() {
   const [collapsed, setCollapsed] = useState(false);
   const [appsOpen, setAppsOpen] = useState(false);
 
-  const goHome = () => {
-    navigate("/painel");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <div className={`pc-root ${collapsed ? "collapsed" : ""}`}>
       {/* SIDEBAR */}
@@ -32,13 +27,18 @@ export default function ProntfyCoreLayouts() {
           <button
             className="pc-hamburger"
             onClick={() => setCollapsed(v => !v)}
-            aria-label="Recolher menu"
           >
             <FiMenu />
           </button>
 
           {!collapsed && (
-            <button className="pc-logo-btn" onClick={goHome}>
+            <button
+              className="pc-logo pc-logo-btn"
+              onClick={() => {
+                navigate("/painel");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
               <img
                 src="/images/logo-symbol-white.png"
                 alt="Prontfy"
@@ -115,33 +115,36 @@ export default function ProntfyCoreLayouts() {
               aria-label="Abrir apps"
             >
               <div className="pc-apps-icon">
-                {/* BOLINHAS */}
+                {/* GRID */}
                 <div className="pc-dots-grid">
                   {Array.from({ length: 9 }).map((_, i) => (
                     <span key={i} />
                   ))}
                 </div>
 
-                {/* SVG P INLINE */}
+                {/* P ORGÂNICO SVG INLINE */}
                 <svg
                   className="pc-p-symbol"
-                  viewBox="0 0 120 160"
+                  viewBox="0 0 100 120"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     d="M30 10
-                       Q30 10 30 30
-                       V130
-                       Q30 145 45 145
-                       Q60 145 60 130
-                       V95
-                       Q60 95 85 95
-                       Q110 95 110 60
-                       Q110 25 85 25
-                       H45"
+                       V100
+                       C30 105 40 105 40 100
+                       V65
+                       C60 65 80 55 80 35
+                       C80 15 60 10 45 10
+                       H30
+                       Z
+                       M40 20
+                       H45
+                       C58 20 70 25 70 35
+                       C70 45 58 55 45 55
+                       H40"
                     stroke="#111"
-                    strokeWidth="8"
+                    strokeWidth="6"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />

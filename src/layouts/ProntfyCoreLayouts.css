@@ -50,7 +50,6 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 600;
   cursor: pointer;
 }
 
@@ -83,20 +82,6 @@ body {
   background: rgba(255, 255, 255, 0.08);
 }
 
-.pc-sidebar-footer {
-  margin-top: auto;
-  padding: 12px;
-}
-
-.logout {
-  background: none;
-  border: none;
-  color: #ffb4b4;
-  display: flex;
-  gap: 8px;
-  cursor: pointer;
-}
-
 /* MAIN */
 .pc-main {
   flex: 1;
@@ -124,12 +109,6 @@ body {
   padding: 8px 12px;
   border-radius: 10px;
   width: 320px;
-}
-
-.pc-search input {
-  border: none;
-  outline: none;
-  background: transparent;
 }
 
 /* TOP ACTIONS */
@@ -170,15 +149,14 @@ body {
   cursor: pointer;
 }
 
-/* APPS */
+/* APPS BUTTON */
 .pc-apps-btn {
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  border: none;
   background: transparent;
+  border: none;
   cursor: pointer;
-  position: relative;
 }
 
 .pc-apps-icon {
@@ -205,19 +183,19 @@ body {
   border-radius: 50%;
 }
 
-/* P SVG */
+/* SVG P DRAW */
 .pc-p-symbol {
   position: absolute;
   inset: 0;
 }
 
 .pc-p-symbol path {
-  stroke-dasharray: 420;
-  stroke-dashoffset: 420;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
   transition: stroke-dashoffset 0.6s ease;
 }
 
-/* HOVER */
+/* HOVER EFFECT */
 .pc-apps-btn:hover .pc-dots-grid {
   opacity: 0;
 }
@@ -236,21 +214,6 @@ body {
   border-radius: 12px;
   padding: 8px;
   width: 200px;
-  z-index: 10;
-}
-
-.pc-apps-menu button {
-  background: none;
-  border: none;
-  color: #fff;
-  padding: 8px;
-  text-align: left;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.pc-apps-menu button:hover {
-  background: rgba(255, 255, 255, 0.1);
 }
 
 /* HERO */
