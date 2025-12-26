@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   FiHome,
   FiUsers,
@@ -20,6 +20,22 @@ export default function ProntfyCoreLayouts() {
   const [appsOpen, setAppsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
+  const appsRef = useRef(null);
+  const profileRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (appsRef.current && !appsRef.current.contains(e.target)) {
+        setAppsOpen(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setProfileOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className={`pc-root ${collapsed ? "collapsed" : ""}`}>
       {/* SIDEBAR */}
@@ -35,7 +51,9 @@ export default function ProntfyCoreLayouts() {
           {!collapsed && (
             <button
               className="pc-logo-btn"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={() =>
+                window.scrollTo({ top: 0, behavior: "smooth" })
+              }
             >
               <img
                 src="/images/logo-symbol-white.png"
@@ -61,13 +79,14 @@ export default function ProntfyCoreLayouts() {
 
         <div className="pc-sidebar-footer">
           <button
-            className="logout"
+            className="pc-logout-btn"
             onClick={() => {
               logout();
               navigate("/login");
             }}
           >
-            <FiLogOut /> {!collapsed && "Sair"}
+            <FiLogOut />
+            {!collapsed && "Sair"}
           </button>
         </div>
       </aside>
@@ -88,8 +107,8 @@ export default function ProntfyCoreLayouts() {
             </button>
 
             {/* AVATAR */}
-            <div className="pc-profile-wrapper">
-              {user ? (
+            {user && (
+              <div className="pc-profile-wrapper" ref={profileRef}>
                 <img
                   src={
                     user?.user_metadata?.avatar_url ||
@@ -99,101 +118,87 @@ export default function ProntfyCoreLayouts() {
                   className="pc-avatar"
                   onClick={() => setProfileOpen(v => !v)}
                 />
-              ) : (
-                <button
-                  className="pc-login-btn"
-                  onClick={() => navigate("/login")}
-                >
-                  Entrar
-                </button>
-              )}
 
-              {profileOpen && user && (
-                <div className="pc-profile-menu">
-                  <div className="pc-profile-info">
+                {profileOpen && (
+                  <div className="pc-profile-menu">
                     <img
                       src={
                         user?.user_metadata?.avatar_url ||
                         "/images/avatar-placeholder.png"
                       }
                       alt="Avatar"
+                      className="pc-profile-avatar"
                     />
-                    <div>
-                      <strong>
-                        {user.user_metadata?.name || "Usuário"}
-                      </strong>
-                      <span>
-                        {user.email || "Conta conectada"}
-                      </span>
+
+                    <strong className="pc-profile-name">
+                      {user.user_metadata?.name || "Usuário"}
+                    </strong>
+
+                    <span className="pc-profile-email">
+                      {user.email}
+                    </span>
+
+                    <div className="pc-profile-actions">
+                      <button>Trocar foto</button>
+                      <button>Configurações da conta</button>
+                      <button
+                        className="danger"
+                        onClick={() => {
+                          logout();
+                          navigate("/login");
+                        }}
+                      >
+                        Sair
+                      </button>
                     </div>
                   </div>
+                )}
+              </div>
+            )}
 
-                  <button>Trocar foto</button>
-                  <button>Configurações da conta</button>
-                  <button
-                    onClick={() => {
-                      logout();
-                      navigate("/login");
-                    }}
+            {/* APPS */}
+            <div className="pc-apps-wrapper" ref={appsRef}>
+              <button
+                className="pc-apps-btn"
+                onClick={() => setAppsOpen(v => !v)}
+              >
+                <div className="pc-apps-icon">
+                  <div className="pc-dots-grid">
+                    {Array.from({ length: 9 }).map((_, i) => (
+                      <span key={i} />
+                    ))}
+                  </div>
+
+                  <svg
+                    className="pc-p-symbol"
+                    viewBox="0 0 100 100"
+                    fill="none"
                   >
-                    Sair
-                  </button>
+                    <path
+                      d="M25 10 v80 M25 10 h30 c20 0 20 40 0 40 h-30"
+                      stroke="#111"
+                      strokeWidth="8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              </button>
+
+              {appsOpen && (
+                <div className="pc-apps-menu">
+                  <button>Painel</button>
+                  <button>Criadores</button>
+                  <button>Ferramentas</button>
+                  <button>Configurações</button>
+                  <button>Ajuda</button>
+                  <button>Atualizações</button>
                 </div>
               )}
             </div>
-
-            {/* APPS */}
-            <button
-              className="pc-apps-btn"
-              onClick={() => setAppsOpen(v => !v)}
-            >
-              <div className="pc-apps-icon">
-                <div className="pc-dots-grid">
-                  {Array.from({ length: 9 }).map((_, i) => (
-                    <span key={i} />
-                  ))}
-                </div>
-
-                {/* SVG temporário do P (trocar depois pelo definitivo) */}
-                <svg
-                  className="pc-p-symbol"
-                  viewBox="0 0 100 100"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M30 85V15h28c16 0 24 8 24 20s-8 20-24 20H30"
-                    stroke="#000"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            </button>
-
-            {appsOpen && (
-              <div className="pc-apps-menu">
-                <button>Painel</button>
-                <button>Criadores</button>
-                <button>Ferramentas</button>
-                <button>Configurações</button>
-                <button>Ajuda</button>
-                <button>Atualizações</button>
-                <button
-                  onClick={() => {
-                    logout();
-                    navigate("/login");
-                  }}
-                >
-                  Sair
-                </button>
-              </div>
-            )}
           </div>
         </header>
 
-        {/* HERO */}
         <section className="pc-hero">
           <h1>Bem-vindo ao Prontfy Core</h1>
           <p>Você está no início do seu painel de controle.</p>

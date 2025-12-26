@@ -80,7 +80,29 @@ body {
 }
 
 .pc-menu button:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255,255,255,0.08);
+}
+
+.pc-sidebar-footer {
+  margin-top: auto;
+  padding: 12px;
+}
+
+.pc-logout-btn {
+  width: 100%;
+  background: rgba(239,68,68,0.15);
+  border: none;
+  color: #fecaca;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pc-logout-btn:hover {
+  background: rgba(239,68,68,0.25);
 }
 
 /* MAIN */
@@ -126,9 +148,11 @@ body {
   position: relative;
 }
 
+/* ICON */
 .pc-icon-btn {
   width: 36px;
   height: 36px;
+  border-radius: 8px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -156,38 +180,62 @@ body {
   top: 48px;
   right: 0;
   background: #1f2937;
-  color: #fff;
-  border-radius: 12px;
-  width: 220px;
-  padding: 8px;
-}
-
-.pc-profile-info {
+  border-radius: 14px;
+  width: 260px;
+  padding: 16px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 8px;
-  padding: 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  z-index: 20;
 }
 
-.pc-profile-info img {
-  width: 40px;
-  height: 40px;
+.pc-profile-avatar {
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
 }
 
-/* LOGIN */
-.pc-login-btn {
-  padding: 6px 12px;
+.pc-profile-name {
+  color: #fff;
+}
+
+.pc-profile-email {
+  color: #9ca3af;
+  font-size: 13px;
+  text-align: center;
+}
+
+.pc-profile-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.pc-profile-actions button {
+  padding: 10px;
   border-radius: 8px;
-  border: 1px solid #d1d5db;
-  background: #fff;
+  border: none;
+  background: #111827;
+  color: #fff;
   cursor: pointer;
 }
 
+.pc-profile-actions .danger {
+  background: #7f1d1d;
+}
+
 /* APPS */
+.pc-apps-wrapper {
+  position: relative;
+}
+
 .pc-apps-btn {
   width: 36px;
   height: 36px;
+  border-radius: 8px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -203,10 +251,10 @@ body {
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3,1fr);
   gap: 4px;
   place-items: center;
-  transition: opacity 0.2s ease;
+  transition: opacity .2s;
 }
 
 .pc-dots-grid span {
@@ -219,12 +267,14 @@ body {
 .pc-p-symbol {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .pc-p-symbol path {
-  stroke-dasharray: 260;
-  stroke-dashoffset: 260;
-  transition: stroke-dashoffset 0.5s ease;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  transition: stroke-dashoffset .4s ease;
 }
 
 .pc-apps-btn:hover .pc-dots-grid {
@@ -241,20 +291,20 @@ body {
   top: 48px;
   right: 0;
   background: #1f2937;
-  color: #fff;
   border-radius: 12px;
-  width: 200px;
   padding: 8px;
+  width: 200px;
+  display: grid;
+  gap: 4px;
 }
 
 .pc-apps-menu button {
   background: none;
   border: none;
   color: #fff;
-  padding: 10px;
-  text-align: left;
+  padding: 8px;
   border-radius: 6px;
-  cursor: pointer;
+  text-align: left;
 }
 
 .pc-apps-menu button:hover {
