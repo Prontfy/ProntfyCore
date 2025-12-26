@@ -44,12 +44,13 @@ body {
 }
 
 .pc-logo-btn {
-  background: none;
-  border: none;
-  color: #fff;
   display: flex;
   align-items: center;
   gap: 8px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -111,6 +112,12 @@ body {
   width: 320px;
 }
 
+.pc-search input {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
 /* TOP ACTIONS */
 .pc-top-actions {
   display: flex;
@@ -119,11 +126,9 @@ body {
   position: relative;
 }
 
-/* ICON BUTTON */
 .pc-icon-btn {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -138,6 +143,36 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
+  cursor: pointer;
+}
+
+/* PROFILE MENU */
+.pc-profile-wrapper {
+  position: relative;
+}
+
+.pc-profile-menu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background: #1f2937;
+  color: #fff;
+  border-radius: 12px;
+  width: 220px;
+  padding: 8px;
+}
+
+.pc-profile-info {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.pc-profile-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 /* LOGIN */
@@ -149,13 +184,12 @@ body {
   cursor: pointer;
 }
 
-/* APPS BUTTON */
+/* APPS */
 .pc-apps-btn {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
-  background: transparent;
   border: none;
+  background: transparent;
   cursor: pointer;
 }
 
@@ -165,7 +199,6 @@ body {
   position: relative;
 }
 
-/* DOTS */
 .pc-dots-grid {
   position: absolute;
   inset: 0;
@@ -183,19 +216,17 @@ body {
   border-radius: 50%;
 }
 
-/* SVG P DRAW */
 .pc-p-symbol {
   position: absolute;
   inset: 0;
 }
 
 .pc-p-symbol path {
-  stroke-dasharray: 400;
-  stroke-dashoffset: 400;
-  transition: stroke-dashoffset 0.6s ease;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  transition: stroke-dashoffset 0.5s ease;
 }
 
-/* HOVER EFFECT */
 .pc-apps-btn:hover .pc-dots-grid {
   opacity: 0;
 }
@@ -212,8 +243,22 @@ body {
   background: #1f2937;
   color: #fff;
   border-radius: 12px;
-  padding: 8px;
   width: 200px;
+  padding: 8px;
+}
+
+.pc-apps-menu button {
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pc-apps-menu button:hover {
+  background: rgba(255,255,255,0.1);
 }
 
 /* HERO */

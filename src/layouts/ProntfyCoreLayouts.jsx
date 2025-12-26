@@ -18,6 +18,7 @@ export default function ProntfyCoreLayouts() {
 
   const [collapsed, setCollapsed] = useState(false);
   const [appsOpen, setAppsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   return (
     <div className={`pc-root ${collapsed ? "collapsed" : ""}`}>
@@ -33,11 +34,8 @@ export default function ProntfyCoreLayouts() {
 
           {!collapsed && (
             <button
-              className="pc-logo pc-logo-btn"
-              onClick={() => {
-                navigate("/painel");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+              className="pc-logo-btn"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               <img
                 src="/images/logo-symbol-white.png"
@@ -85,66 +83,88 @@ export default function ProntfyCoreLayouts() {
 
           <div className="pc-top-actions">
             {/* SININHO */}
-            <button className="pc-icon-btn" aria-label="Notificações">
+            <button className="pc-icon-btn">
               <FiBell className="pc-bell" />
             </button>
 
-            {/* AVATAR / LOGIN */}
-            {user ? (
-              <img
-                src={
-                  user?.user_metadata?.avatar_url ||
-                  "/images/avatar-placeholder.png"
-                }
-                alt="Avatar"
-                className="pc-avatar"
-              />
-            ) : (
-              <button
-                className="pc-login-btn"
-                onClick={() => navigate("/login")}
-              >
-                Entrar
-              </button>
-            )}
+            {/* AVATAR */}
+            <div className="pc-profile-wrapper">
+              {user ? (
+                <img
+                  src={
+                    user?.user_metadata?.avatar_url ||
+                    "/images/avatar-placeholder.png"
+                  }
+                  alt="Avatar"
+                  className="pc-avatar"
+                  onClick={() => setProfileOpen(v => !v)}
+                />
+              ) : (
+                <button
+                  className="pc-login-btn"
+                  onClick={() => navigate("/login")}
+                >
+                  Entrar
+                </button>
+              )}
+
+              {profileOpen && user && (
+                <div className="pc-profile-menu">
+                  <div className="pc-profile-info">
+                    <img
+                      src={
+                        user?.user_metadata?.avatar_url ||
+                        "/images/avatar-placeholder.png"
+                      }
+                      alt="Avatar"
+                    />
+                    <div>
+                      <strong>
+                        {user.user_metadata?.name || "Usuário"}
+                      </strong>
+                      <span>
+                        {user.email || "Conta conectada"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button>Trocar foto</button>
+                  <button>Configurações da conta</button>
+                  <button
+                    onClick={() => {
+                      logout();
+                      navigate("/login");
+                    }}
+                  >
+                    Sair
+                  </button>
+                </div>
+              )}
+            </div>
 
             {/* APPS */}
             <button
               className="pc-apps-btn"
               onClick={() => setAppsOpen(v => !v)}
-              aria-label="Abrir apps"
             >
               <div className="pc-apps-icon">
-                {/* GRID */}
                 <div className="pc-dots-grid">
                   {Array.from({ length: 9 }).map((_, i) => (
                     <span key={i} />
                   ))}
                 </div>
 
-                {/* P ORGÂNICO SVG INLINE */}
+                {/* SVG temporário do P (trocar depois pelo definitivo) */}
                 <svg
                   className="pc-p-symbol"
-                  viewBox="0 0 100 120"
+                  viewBox="0 0 100 100"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M30 10
-                       V100
-                       C30 105 40 105 40 100
-                       V65
-                       C60 65 80 55 80 35
-                       C80 15 60 10 45 10
-                       H30
-                       Z
-                       M40 20
-                       H45
-                       C58 20 70 25 70 35
-                       C70 45 58 55 45 55
-                       H40"
-                    stroke="#111"
-                    strokeWidth="6"
+                    d="M30 85V15h28c16 0 24 8 24 20s-8 20-24 20H30"
+                    stroke="#000"
+                    strokeWidth="8"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
