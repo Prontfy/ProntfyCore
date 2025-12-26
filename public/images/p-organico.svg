@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <path
+    d="M60 18
+       C60 18 150 18 150 85
+       C150 125 95 135 70 135
+       L70 178
+       C70 178 30 168 30 130
+       L30 42
+       C30 26 45 18 60 18
+       Z"
+    fill="none"
+    stroke="black"
+    stroke-width="14"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
