@@ -1,0 +1,98 @@
+/* src/styles/mobile.css */
+
+.mobile-root {
+  padding: 16px 16px 96px;
+}
+
+.mobile-header h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.mobile-header p {
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+.mobile-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 16px;
+  box-shadow: 0 16px 36px rgba(0,0,0,.08);
+}
+
+.progress-card {
+  text-align: center;
+}
+
+.progress-circle {
+  position: relative;
+  width: 140px;
+  margin: 0 auto;
+}
+
+.progress-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-center strong {
+  font-size: 2rem;
+}
+
+.muted {
+  color: #6b7280;
+  font-size: .95rem;
+}
+
+/* Bottom Nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -12px 32px rgba(0,0,0,.08);
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  font-size: 22px;
+}
+
+.logo-p img {
+  width: 44px;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: flex-end;
+}
+
+.modal-sheet {
+  background: #fff;
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  padding: 20px;
+}
+
+.modal-sheet button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 12px;
+}

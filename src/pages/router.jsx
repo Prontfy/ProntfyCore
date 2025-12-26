@@ -1,5 +1,5 @@
 // src/pages/router.jsx
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   BrowserRouter,
   Routes,
@@ -7,86 +7,47 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import PublicLayout from "../layouts/PublicLayout";
-import ProntfyCoreLayouts from "../layouts/ProntfyCoreLayouts";
-import ProntfyMobileLayout from "../layouts/ProntfyMobileLayout";
-
-import Login from "./Login";
-import Dashboard from "./Dashboard";
-import PrivacyPolicy from "./PrivacyPolicy";
-
 import { useAuthStore } from "../store/auth";
 
-/* ===============================
-   DETECTOR DE MOBILE
-================================ */
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+// Layouts
+import ProntfyMobileLayout from "../layouts/ProntfyMobileLayout";
+import ProntfyCoreLayouts from "../layouts/ProntfyCoreLayouts"; // 👈 PLURAL
 
-  useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
+// Pages
+import Dashboard from "./Dashboard";
+import Login from "./Login";
 
-  return isMobile;
+// Helper simples para detectar mobile
+function isMobile() {
+  return window.innerWidth <= 768;
 }
 
-/* ===============================
-   ROTA PROTEGIDA
-================================ */
-function ProtectedRoute({ children }) {
-  const { user, loading } = useAuthStore();
-
-  if (loading) return <div style={{ padding: 24 }}>Carregando...</div>;
-
-  return user ? children : <Navigate to="/login" replace />;
-}
-
-/* ===============================
-   LAYOUT SWITCHER
-================================ */
-function AppLayout() {
-  const isMobile = useIsMobile();
-  return isMobile ? <ProntfyMobileLayout /> : <ProntfyCoreLayouts />;
-}
-
-/* ===============================
-   ROUTER PRINCIPAL
-================================ */
 export default function AppRouter() {
+  const user = useAuthStore((s) => s.user);
+
+  const Layout = isMobile()
+    ? ProntfyMobileLayout
+    : ProntfyCoreLayouts;
+
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* ===== ROTAS PÚBLICAS ===== */}
-        <Route path="/" element={<AppLayout />}>
-          {/* HOME / DASHBOARD VISUAL (SEM LOGIN) */}
-          <Route index element={<Dashboard />} />
+        {/* ROTAS PÚBLICAS */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/hub" element={<div>Hub Prontfy</div>} />
+          <Route path="/community" element={<div>Comunidade</div>} />
+          <Route path="/settings" element={<div>Configurações</div>} />
         </Route>
 
-        <Route path="/" element={<PublicLayout />}>
-          <Route path="politica-de-privacidade" element={<PrivacyPolicy />} />
-        </Route>
-
-        {/* ===== LOGIN ===== */}
-        <Route path="/login" element={<Login />} />
-
-        {/* ===== ROTAS PROTEGIDAS ===== */}
+        {/* LOGIN */}
         <Route
-          path="/painel"
-          element={
-            <ProtectedRoute>
-              <AppLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<Dashboard />} />
-        </Route>
+          path="/login"
+          element={user ? <Navigate to="/" /> : <Login />}
+        />
 
-        {/* ===== FALLBACK ===== */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-
+        {/* FALLBACK */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );

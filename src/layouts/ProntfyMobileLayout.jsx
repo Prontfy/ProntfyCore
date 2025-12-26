@@ -1,75 +1,77 @@
 // src/layouts/ProntfyMobileLayout.jsx
 import React from "react";
-import {
-  FiHome,
-  FiBell,
-  FiPlus,
-  FiUsers,
-  FiSettings,
-  FiMenu,
-} from "react-icons/fi";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/auth";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import "./ProntfyMobileLayout.css";
 
 export default function ProntfyMobileLayout() {
   const navigate = useNavigate();
-  const { user } = useAuthStore();
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="pm-root">
-      {/* TOPBAR MOBILE */}
-      <header className="pm-topbar">
-        <button className="pm-icon-btn">
-          <FiMenu size={22} />
-        </button>
-
-        <div
-          className="pm-logo"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          Prontfy
+    <div className="mobile-root">
+      {/* TOP BAR */}
+      <header className="mobile-topbar">
+        <div className="mobile-logo" onClick={() => navigate("/")}>
+          <img src="/images/logo-prontfy.svg" alt="Prontfy" />
+          <span>Prontfy</span>
         </div>
 
-        <img
-          src={
-            user?.user_metadata?.avatar_url ||
-            "/images/avatar-placeholder.png"
-          }
-          alt="Avatar"
-          className="pm-avatar"
-          onClick={() => navigate("/perfil")}
-        />
+        <div className="mobile-top-actions">
+          <div className="notification">
+            <span className="badge">3</span>
+            🔔
+          </div>
+
+          <div className="avatar">
+            <img
+              src="https://i.pravatar.cc/100"
+              alt="Avatar"
+            />
+          </div>
+        </div>
       </header>
 
-      {/* CONTEÚDO */}
-      <main className="pm-content">
+      {/* PAGE CONTENT */}
+      <main className="mobile-content">
         <Outlet />
       </main>
 
       {/* BOTTOM NAV */}
-      <nav className="pm-bottom-nav">
-        <button onClick={() => navigate("/painel")}>
-          <FiHome />
-        </button>
-
-        <button onClick={() => navigate("/notificacoes")}>
-          <FiBell />
+      <nav className="mobile-bottom-nav">
+        <button
+          className={isActive("/") ? "active" : ""}
+          onClick={() => navigate("/")}
+        >
+          🏠
         </button>
 
         <button
-          className="pm-create-btn"
-          onClick={() => navigate("/criar")}
+          onClick={() => alert("Abrir modal de criar / chat")}
         >
-          <span>P</span>
+          ＋
         </button>
 
-        <button onClick={() => navigate("/usuarios")}>
-          <FiUsers />
+        <button
+          className="center-logo"
+          onClick={() => navigate("/hub")}
+        >
+          <img src="/images/p-logo.svg" alt="Prontfy P" />
         </button>
 
-        <button onClick={() => navigate("/configuracoes")}>
-          <FiSettings />
+        <button
+          className={isActive("/community") ? "active" : ""}
+          onClick={() => navigate("/community")}
+        >
+          👥
+        </button>
+
+        <button
+          className={isActive("/settings") ? "active" : ""}
+          onClick={() => navigate("/settings")}
+        >
+          ⚙️
         </button>
       </nav>
     </div>

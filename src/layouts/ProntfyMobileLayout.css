@@ -1,83 +1,81 @@
-/* ROOT */
-.pm-root {
+.mobile-root {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   background: #f6f7f9;
 }
 
-/* TOPBAR */
-.pm-topbar {
-  height: 56px;
-  background: #fff;
+.mobile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  height: 28px;
+  cursor: pointer;
+}
+
+.header-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 14px;
-  border-bottom: 1px solid #e5e7eb;
+  gap: 14px;
 }
 
-.pm-logo {
-  font-weight: 700;
-  font-size: 18px;
-  cursor: pointer;
+.notification {
+  position: relative;
+  font-size: 20px;
 }
 
-.pm-icon-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.pm-avatar {
-  width: 32px;
-  height: 32px;
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 5px;
   border-radius: 50%;
-  object-fit: cover;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
   cursor: pointer;
 }
 
-/* CONTENT */
-.pm-content {
+.mobile-content {
   flex: 1;
+  overflow-y: auto;
   padding: 16px;
 }
 
-/* BOTTOM NAV */
-.pm-bottom-nav {
+.bottom-nav {
   height: 64px;
   background: #fff;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #eee;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
-.pm-bottom-nav button {
+.bottom-nav button {
   background: none;
   border: none;
   font-size: 22px;
   cursor: pointer;
-  color: #111;
+  opacity: 0.7;
 }
 
-/* BOTÃO CENTRAL (P) */
-.pm-create-btn {
-  width: 56px;
-  height: 56px;
-  background: #111;
-  color: #fff;
-  border-radius: 50%;
-  border: none;
-  font-size: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: -24px;
-  cursor: pointer;
+.bottom-nav button.active {
+  opacity: 1;
 }
 
-.pm-create-btn span {
-  font-weight: 700;
-  font-size: 24px;
+.center-p img {
+  width: 38px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
 }
