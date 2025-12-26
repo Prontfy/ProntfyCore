@@ -1,0 +1,83 @@
+/* ROOT */
+.pm-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f6f7f9;
+}
+
+/* TOPBAR */
+.pm-topbar {
+  height: 56px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.pm-logo {
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.pm-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.pm-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* CONTENT */
+.pm-content {
+  flex: 1;
+  padding: 16px;
+}
+
+/* BOTTOM NAV */
+.pm-bottom-nav {
+  height: 64px;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.pm-bottom-nav button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #111;
+}
+
+/* BOTÃO CENTRAL (P) */
+.pm-create-btn {
+  width: 56px;
+  height: 56px;
+  background: #111;
+  color: #fff;
+  border-radius: 50%;
+  border: none;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -24px;
+  cursor: pointer;
+}
+
+.pm-create-btn span {
+  font-weight: 700;
+  font-size: 24px;
+}

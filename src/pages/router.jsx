@@ -25,34 +25,30 @@ function ProtectedRoute({ children }) {
 }
 
 /* ===============================
-   ROUTER PRINCIPAL
+   ROUTER PRINCIPAL (ÚNICO)
 ================================ */
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* =====================================================
-            ROTAS PÚBLICAS LEGAIS (META / FACEBOOK)
-            NÃO dependem de login
-        ====================================================== */}
+        {/* ===============================
+            ROTAS PÚBLICAS / META
+        =============================== */}
         <Route path="/" element={<PublicLayout />}>
-          <Route path="politica-de-privacidade" element={<PrivacyPolicy />} />
+          <Route
+            path="politica-de-privacidade"
+            element={<PrivacyPolicy />}
+          />
 
           <Route
             path="termos-de-servico"
             element={
               <main style={{ padding: 32, maxWidth: 900, margin: "0 auto" }}>
                 <h1>Termos de Serviço</h1>
-                <p>
-                  Ao utilizar a plataforma Prontfy, você concorda com estes termos.
-                </p>
-                <p>
-                  O uso da plataforma deve respeitar a legislação vigente.
-                </p>
-                <p>
-                  Estes termos podem ser atualizados a qualquer momento.
-                </p>
+                <p>Ao utilizar a plataforma Prontfy, você concorda com estes termos.</p>
+                <p>O uso da plataforma deve respeitar a legislação vigente.</p>
+                <p>Estes termos podem ser atualizados a qualquer momento.</p>
               </main>
             }
           />
@@ -62,29 +58,23 @@ export default function AppRouter() {
             element={
               <main style={{ padding: 32, maxWidth: 900, margin: "0 auto" }}>
                 <h1>Exclusão de dados</h1>
+                <p>O usuário pode solicitar a exclusão de seus dados pessoais.</p>
                 <p>
-                  O usuário pode solicitar a exclusão de seus dados pessoais a
-                  qualquer momento.
-                </p>
-                <p>
-                  Envie um e-mail para:
-                </p>
-                <p>
-                  <strong>contato@prontfy.com.br</strong>
+                  Contato: <strong>contato@prontfy.com.br</strong>
                 </p>
               </main>
             }
           />
         </Route>
 
-        {/* =====================================================
-            LOGIN
-        ====================================================== */}
+        {/* ===============================
+            LOGIN (FORA DO APP)
+        =============================== */}
         <Route path="/login" element={<Login />} />
 
-        {/* =====================================================
-            APLICAÇÃO PRINCIPAL
-        ====================================================== */}
+        {/* ===============================
+            APLICAÇÃO (DESKTOP + MOBILE)
+        =============================== */}
         <Route path="/" element={<ProntfyCoreLayouts />}>
           <Route
             index
@@ -105,9 +95,9 @@ export default function AppRouter() {
           />
         </Route>
 
-        {/* =====================================================
-            FALLBACK GLOBAL (ÚLTIMO SEMPRE)
-        ====================================================== */}
+        {/* ===============================
+            FALLBACK GLOBAL
+        =============================== */}
         <Route path="*" element={<Navigate to="/" replace />} />
 
       </Routes>
