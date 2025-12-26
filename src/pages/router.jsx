@@ -1,70 +1,130 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
-import PublicLayout from "../layouts/PublicLayout";
-import ProntfyCoreLayouts from "../layouts/ProntfyCoreLayouts";
-import ProntfyMobileLayout from "../layouts/ProntfyMobileLayout";
-
-import Login from "./Login";
-import Dashboard from "./Dashboard";
-import PrivacyPolicy from "./PrivacyPolicy";
-
-import { useAuthStore } from "../store/auth";
-
-function isMobile() {
-  return window.innerWidth <= 768;
+* {
+  box-sizing: border-box;
 }
 
-function ProtectedRoute({ children }) {
-  const { user, loading } = useAuthStore();
-
-  if (loading) {
-    return <div style={{ padding: 24 }}>Carregando...</div>;
-  }
-
-  return user ? children : <Navigate to="/login" replace />;
+body {
+  margin: 0;
+  background: #f6f7f9;
+  font-family: Inter, system-ui, sans-serif;
 }
 
-export default function AppRouter() {
-  const Layout = isMobile()
-    ? ProntfyMobileLayout
-    : ProntfyCoreLayouts;
+/* ROOT */
+.pm-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-  return (
-    <BrowserRouter>
-      <Routes>
+/* ===== TOPO ===== */
+.pm-topbar {
+  height: 56px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+}
 
-        {/* ROTAS PÚBLICAS */}
-        <Route path="/" element={<PublicLayout />}>
-          <Route path="politica-de-privacidade" element={<PrivacyPolicy />} />
-        </Route>
+.pm-logo-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 
-        {/* LOGIN */}
-        <Route path="/login" element={<Login />} />
+.pm-logo {
+  width: 28px;
+  height: 28px;
+}
 
-        {/* APP */}
-        <Route path="/" element={<Layout />}>
-          <Route
-            index
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
+.pm-logo-text {
+  font-weight: 600;
+  font-size: 16px;
+}
 
-          <Route
-            path="painel"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
+.pm-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
-  );
+.pm-icon-btn {
+  position: relative;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.pm-notification-dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 5px;
+  border-radius: 999px;
+}
+
+.pm-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* ===== CONTEÚDO ===== */
+.pm-content {
+  flex: 1;
+  padding: 16px;
+  padding-bottom: 90px;
+}
+
+/* ===== MENU INFERIOR ===== */
+.pm-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 50;
+}
+
+.pm-nav-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #111;
+  cursor: pointer;
+}
+
+.pm-nav-btn.active {
+  color: #2563eb;
+}
+
+/* PLUS */
+.pm-plus {
+  font-size: 24px;
+}
+
+/* BOTÃO CENTRAL */
+.pm-nav-center {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transform: translateY(-6px);
+}
+
+.pm-p-logo {
+  width: 42px;
+  height: 42px;
 }
