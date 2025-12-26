@@ -1,130 +1,93 @@
-* {
-  box-sizing: border-box;
+// src/pages/router.jsx
+import React, { useEffect, useState } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
+import PublicLayout from "../layouts/PublicLayout";
+import ProntfyCoreLayouts from "../layouts/ProntfyCoreLayouts";
+import ProntfyMobileLayout from "../layouts/ProntfyMobileLayout";
+
+import Login from "./Login";
+import Dashboard from "./Dashboard";
+import PrivacyPolicy from "./PrivacyPolicy";
+
+import { useAuthStore } from "../store/auth";
+
+/* ===============================
+   DETECTOR DE MOBILE
+================================ */
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  return isMobile;
 }
 
-body {
-  margin: 0;
-  background: #f6f7f9;
-  font-family: Inter, system-ui, sans-serif;
+/* ===============================
+   ROTA PROTEGIDA
+================================ */
+function ProtectedRoute({ children }) {
+  const { user, loading } = useAuthStore();
+
+  if (loading) return <div style={{ padding: 24 }}>Carregando...</div>;
+
+  return user ? children : <Navigate to="/login" replace />;
 }
 
-/* ROOT */
-.pm-root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* ===============================
+   LAYOUT SWITCHER
+================================ */
+function AppLayout() {
+  const isMobile = useIsMobile();
+  return isMobile ? <ProntfyMobileLayout /> : <ProntfyCoreLayouts />;
 }
 
-/* ===== TOPO ===== */
-.pm-topbar {
-  height: 56px;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 14px;
-}
+/* ===============================
+   ROUTER PRINCIPAL
+================================ */
+export default function AppRouter() {
+  return (
+    <BrowserRouter>
+      <Routes>
 
-.pm-logo-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
+        {/* ===== ROTAS PÚBLICAS ===== */}
+        <Route path="/" element={<AppLayout />}>
+          {/* HOME / DASHBOARD VISUAL (SEM LOGIN) */}
+          <Route index element={<Dashboard />} />
+        </Route>
 
-.pm-logo {
-  width: 28px;
-  height: 28px;
-}
+        <Route path="/" element={<PublicLayout />}>
+          <Route path="politica-de-privacidade" element={<PrivacyPolicy />} />
+        </Route>
 
-.pm-logo-text {
-  font-weight: 600;
-  font-size: 16px;
-}
+        {/* ===== LOGIN ===== */}
+        <Route path="/login" element={<Login />} />
 
-.pm-top-actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
+        {/* ===== ROTAS PROTEGIDAS ===== */}
+        <Route
+          path="/painel"
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Dashboard />} />
+        </Route>
 
-.pm-icon-btn {
-  position: relative;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}
+        {/* ===== FALLBACK ===== */}
+        <Route path="*" element={<Navigate to="/" replace />} />
 
-.pm-notification-dot {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background: #ef4444;
-  color: #fff;
-  font-size: 10px;
-  padding: 2px 5px;
-  border-radius: 999px;
-}
-
-.pm-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-/* ===== CONTEÚDO ===== */
-.pm-content {
-  flex: 1;
-  padding: 16px;
-  padding-bottom: 90px;
-}
-
-/* ===== MENU INFERIOR ===== */
-.pm-bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 64px;
-  background: #ffffff;
-  border-top: 1px solid #e5e7eb;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 50;
-}
-
-.pm-nav-btn {
-  background: none;
-  border: none;
-  font-size: 22px;
-  color: #111;
-  cursor: pointer;
-}
-
-.pm-nav-btn.active {
-  color: #2563eb;
-}
-
-/* PLUS */
-.pm-plus {
-  font-size: 24px;
-}
-
-/* BOTÃO CENTRAL */
-.pm-nav-center {
-  background: none;
-  border: none;
-  cursor: pointer;
-  transform: translateY(-6px);
-}
-
-.pm-p-logo {
-  width: 42px;
-  height: 42px;
+      </Routes>
+    </BrowserRouter>
+  );
 }
